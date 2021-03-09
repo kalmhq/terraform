@@ -2,7 +2,10 @@
 
 for debugging bluelight
 
-main.tf is provided by user, the config depends on a existing PVC.
+# files
+
+- `main.tf` is provided by Bluelight, the config depends on a existing PVC.
+- `vpc.tf`, I create this file to provision a PVC needed by `main.tf`
 
 I tried 2 ways to setup a PVC:
 
