@@ -1,3 +1,3 @@
 # about
 
-terraform configs to setup EKS
+terraform configs to setup kubernetes cluster on Cloud
