@@ -8,10 +8,11 @@ variable "gke_password" {
   description = "gke password"
 }
 
-variable "gke_num_nodes" {
-  default     = 3
-  description = "number of gke nodes"
+variable "gke_num_nodes_per_zone" {
+  default     = 1
+  description = "number of gke nodes per zone"
 }
+
 
 # GKE cluster
 resource "google_container_cluster" "primary" {
@@ -39,7 +40,7 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = substr("${google_container_cluster.primary.name}-node-pool", 0, 40)
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = var.gke_num_nodes
+  node_count = var.gke_num_nodes_per_zone
 
   node_config {
     oauth_scopes = [
@@ -51,8 +52,9 @@ resource "google_container_node_pool" "primary_nodes" {
       env = var.project_id
     }
 
+
     # preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "e2-medium"
     tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
